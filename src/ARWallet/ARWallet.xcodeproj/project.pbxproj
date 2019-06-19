@@ -20,10 +20,8 @@
 		33480BB622B92A3000F29F08 /* PasswordForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB522B92A3000F29F08 /* PasswordForm.swift */; };
 		33480BB822B92F8E00F29F08 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB722B92F8E00F29F08 /* ImagePicker.swift */; };
 		33480BBA22B932A400F29F08 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB922B932A400F29F08 /* ImagePickingViewController.swift */; };
-		C565923922B9D212007532DA /* fa-brands-400.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C565923822B9D212007532DA /* fa-brands-400.ttf */; };
 		C565923C22BA717C007532DA /* InfoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923B22BA717C007532DA /* InfoListTableViewController.swift */; };
 		C565923E22BA7539007532DA /* InfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923D22BA7539007532DA /* InfoDetailViewController.swift */; };
-		C565924622BAA59B007532DA /* iPhone XR-XS Max – 1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C565924522BAA59B007532DA /* iPhone XR-XS Max – 1@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,10 +52,8 @@
 		33480BB522B92A3000F29F08 /* PasswordForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordForm.swift; sourceTree = "<group>"; };
 		33480BB722B92F8E00F29F08 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		33480BB922B932A400F29F08 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
-		C565923822B9D212007532DA /* fa-brands-400.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "fa-brands-400.ttf"; path = "../../../../../../Downloads/fa-brands-400.ttf"; sourceTree = "<group>"; };
 		C565923B22BA717C007532DA /* InfoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoListTableViewController.swift; sourceTree = "<group>"; };
 		C565923D22BA7539007532DA /* InfoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDetailViewController.swift; sourceTree = "<group>"; };
-		C565924522BAA59B007532DA /* iPhone XR-XS Max – 1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPhone XR-XS Max – 1@3x.png"; path = "../../../../../../Downloads/iPhone XR-XS Max – 1@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +95,6 @@
 		33480B8C22B912F000F29F08 /* ARWallet */ = {
 			isa = PBXGroup;
 			children = (
-				C565923822B9D212007532DA /* fa-brands-400.ttf */,
 				33480B8D22B912F000F29F08 /* AppDelegate.swift */,
 				33480B8F22B912F000F29F08 /* art.scnassets */,
 				33480B9122B912F000F29F08 /* ViewController.swift */,
@@ -110,7 +105,6 @@
 				33480B9322B912F000F29F08 /* Main.storyboard */,
 				33480BB922B932A400F29F08 /* ImagePickingViewController.swift */,
 				33480B9622B912F200F29F08 /* Assets.xcassets */,
-				C565924522BAA59B007532DA /* iPhone XR-XS Max – 1@3x.png */,
 				33480B9822B912F200F29F08 /* LaunchScreen.storyboard */,
 				33480B9B22B912F200F29F08 /* Info.plist */,
 				33480BB722B92F8E00F29F08 /* ImagePicker.swift */,
@@ -211,11 +205,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				33480B9022B912F000F29F08 /* art.scnassets in Resources */,
-				C565924622BAA59B007532DA /* iPhone XR-XS Max – 1@3x.png in Resources */,
 				33480B9A22B912F200F29F08 /* LaunchScreen.storyboard in Resources */,
 				33480B9722B912F200F29F08 /* Assets.xcassets in Resources */,
 				33480BB422B92A1000F29F08 /* PasswordForm.xib in Resources */,
-				C565923922B9D212007532DA /* fa-brands-400.ttf in Resources */,
 				33480B9522B912F000F29F08 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
