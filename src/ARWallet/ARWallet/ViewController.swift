@@ -21,6 +21,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -37,6 +39,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var referenceImages: [UIImage] = [UIImage]()
     
+    @IBAction func segueToInfoBtn(_ sender: Any) {
+        self.performSegue(withIdentifier: "segueToInfo", sender: self)
+    }
     var DataManager = DataStoreManager.sharedDataStoreManager
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,49 +53,57 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         DispatchQueue.main.async {
             if let unwrapped = self.DataManager.dataStore.userReferenceImages as? [UIImage] {
                 
-                let image = unwrapped[0]
-                
-                guard let cgImage = image.cgImage else { return }
-                
-                //3. Get The Width Of The Image
-                let imageWidth = CGFloat(cgImage.width)
-                
-                //4. Create A Custom AR Reference Image With A Unique Name
-                let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.1)
-                customARReferenceImage.name = "Custom reference image"
-                
-                //4. Insert The Reference Image Into Our Set
-                customReferenceSet.insert(customARReferenceImage)
-                
-                print("ARReference Image == \(customARReferenceImage)")
-                configuration.trackingImages = customReferenceSet
-            } else {
-                guard let unwrappedBundle = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-                    fatalError("Missing expected asset catalog resources.")
+                if unwrapped.count > 0{
+                    
+                    for image in unwrapped {
+                        guard let cgImage = image.cgImage else { return }
+                        
+                        //3. Get The Width Of The Image
+                        let imageWidth = CGFloat(cgImage.width)
+                        
+                        //4. Create A Custom AR Reference Image With A Unique Name
+                        let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.1)
+                        customARReferenceImage.name = "Custom reference image"
+                        
+                        //4. Insert The Reference Image Into Our Set
+                        customReferenceSet.insert(customARReferenceImage)
+                        
+                        print("ARReference Image == \(customARReferenceImage)")
+                    }
+                    
+                    configuration.trackingImages = customReferenceSet
+                } else {
+                    self.presentRefImageAlert()
                 }
-                configuration.trackingImages = unwrappedBundle
+                
+               
+            } else {
+                self.presentRefImageAlert()
+            }
         }
-        
-            
-        }
-        
-        
-        
-        // Create a session configuration
-       
-        
-        // Add previously loaded images to ARScene configuration as detectionImages
-        
-        
-        
-        // Create a session configuration
-        
-
-        
-        
         
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    var imagePicker: ImagePicker!
+    
+    func showImagePicker() {
+         self.imagePicker.present(from: self.view)
+    }
+    
+    func presentRefImageAlert() {
+        if shouldPresentAlert {
+            let alert = UIAlertController(title: "Warning", message: "UH-oh looks like you don't have any reference images click ok to add them now", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.showImagePicker()
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -175,5 +188,49 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "segueToInfo":
+            if let segueDest = segue.destination as? InfoListTableViewController {
+                if let image = self.newRefImage {
+                    segueDest.currentImage = image
+                }
+            }
+        default:
+            print("\(segue.identifier)")
+        }
+    }
     
+    var newRefImage: UIImage?
+    var shouldPresentAlert = true
+    
+}
+
+
+extension ViewController: ImagePickerDelegate {
+    
+    func didSelect(image: UIImage?) {
+        if let unwrappedImage = image {
+            self.newRefImage = unwrappedImage
+            self.shouldPresentAlert = false
+            self.performSegue(withIdentifier: "segueToInfo", sender: self)
+            
+        }
+    }
+}
+
+extension UIColor {
+    convenience init(hexString: String, alpha: CGFloat = 1.0) {
+        var hexInt: UInt32 = 0
+        let scanner = Scanner(string: hexString)
+        scanner.charactersToBeSkipped = CharacterSet(charactersIn: "#")
+        scanner.scanHexInt32(&hexInt)
+        
+        let red = CGFloat((hexInt & 0xff0000) >> 16) / 255.0
+        let green = CGFloat((hexInt & 0xff00) >> 8) / 255.0
+        let blue = CGFloat((hexInt & 0xff) >> 0) / 255.0
+        let alpha = alpha
+        
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
 }

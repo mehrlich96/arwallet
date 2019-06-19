@@ -20,6 +20,7 @@
 		33480BB622B92A3000F29F08 /* PasswordForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB522B92A3000F29F08 /* PasswordForm.swift */; };
 		33480BB822B92F8E00F29F08 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB722B92F8E00F29F08 /* ImagePicker.swift */; };
 		33480BBA22B932A400F29F08 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB922B932A400F29F08 /* ImagePickingViewController.swift */; };
+		33CF6C4422BAB651009B9E7B /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6C4322BAB651009B9E7B /* InitialViewController.swift */; };
 		C565923C22BA717C007532DA /* InfoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923B22BA717C007532DA /* InfoListTableViewController.swift */; };
 		C565923E22BA7539007532DA /* InfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923D22BA7539007532DA /* InfoDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		33480BB522B92A3000F29F08 /* PasswordForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordForm.swift; sourceTree = "<group>"; };
 		33480BB722B92F8E00F29F08 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		33480BB922B932A400F29F08 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
+		33CF6C4322BAB651009B9E7B /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		C565923B22BA717C007532DA /* InfoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoListTableViewController.swift; sourceTree = "<group>"; };
 		C565923D22BA7539007532DA /* InfoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +100,7 @@
 				33480B8D22B912F000F29F08 /* AppDelegate.swift */,
 				33480B8F22B912F000F29F08 /* art.scnassets */,
 				33480B9122B912F000F29F08 /* ViewController.swift */,
+				33CF6C4322BAB651009B9E7B /* InitialViewController.swift */,
 				33480BAF22B913B500F29F08 /* DataStore.swift */,
 				33480BB122B9198E00F29F08 /* DataStoreManager.swift */,
 				33480BB322B92A1000F29F08 /* PasswordForm.xib */,
@@ -231,6 +234,7 @@
 				33480BB022B913B500F29F08 /* DataStore.swift in Sources */,
 				C565923E22BA7539007532DA /* InfoDetailViewController.swift in Sources */,
 				33480BB622B92A3000F29F08 /* PasswordForm.swift in Sources */,
+				33CF6C4422BAB651009B9E7B /* InitialViewController.swift in Sources */,
 				33480BB822B92F8E00F29F08 /* ImagePicker.swift in Sources */,
 				33480BBA22B932A400F29F08 /* ImagePickingViewController.swift in Sources */,
 				33480B8E22B912F000F29F08 /* AppDelegate.swift in Sources */,
@@ -396,14 +400,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7GCH2U5VZ7;
+				DEVELOPMENT_TEAM = LH8GY3DHHE;
 				INFOPLIST_FILE = ARWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sap.ARWallet.test1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sap.ARWallet.demo1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -417,14 +421,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7GCH2U5VZ7;
+				DEVELOPMENT_TEAM = LH8GY3DHHE;
 				INFOPLIST_FILE = ARWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sap.ARWallet.test1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sap.ARWallet.demo1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

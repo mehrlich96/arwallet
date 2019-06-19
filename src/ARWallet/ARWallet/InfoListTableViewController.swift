@@ -13,6 +13,8 @@ class InfoListTableViewController: UITableViewController {
     var info = [Password]()
     var newInfo: Password?
     
+    var currentImage: UIImage!
+    
     var dataManager = DataStoreManager.sharedDataStoreManager
     var sharedData = DataStoreManager.sharedDataStoreManager.dataStore
 
@@ -20,15 +22,11 @@ class InfoListTableViewController: UITableViewController {
         
     }
     
+    @IBAction func addInfo(_ sender: Any) {
+        self.performSegue(withIdentifier: "segueToAdd", sender: self)
+    }
     @IBAction func done(segue:UIStoryboardSegue) {
-        print("done segue started")
-        let infoDetailVC = segue.source as! InfoDetailViewController
-        newInfo = Password(password: infoDetailVC.name, userName: nil, site: nil)
         
-        
-        
-        
-        info.append(newInfo!)
         tableView.reloadData()
     }
     override func viewDidLoad() {
@@ -73,6 +71,33 @@ class InfoListTableViewController: UITableViewController {
         // Configure the cell...
 
         return cell
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let data = info[indexPath.row] as? Password{
+            passingData = data
+            editingIndex = indexPath.row
+            self.performSegue(withIdentifier: "segueToAdd", sender: nil)
+        }
+    }
+    
+    var passingData: Password?
+    var editingIndex: Int?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToAdd" {
+            if let destVC = segue.destination as? InfoDetailViewController {
+                if passingData != nil {
+                    destVC.passwordData = passingData
+                    destVC.isEditingNew = false
+                    destVC.editingIndex = editingIndex
+                } else {
+                    destVC.passwordData = Password(password: "", userName: "", site: "")
+                    destVC.isEditingNew = true
+                }
+            }
+        }
     }
  
     /*
