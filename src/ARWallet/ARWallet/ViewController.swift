@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var referenceImages: [UIImage] = [UIImage]()
     
     @IBAction func segueToInfoBtn(_ sender: Any) {
-        self.performSegue(withIdentifier: "segueToInfo", sender: self)
+        self.showImagePicker()
     }
     var DataManager = DataStoreManager.sharedDataStoreManager
     
