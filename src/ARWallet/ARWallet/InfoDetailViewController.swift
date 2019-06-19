@@ -8,9 +8,12 @@
 
 import UIKit
 
-class InfoDetailViewController: UIViewController {
+class InfoDetailViewController: UIViewController, UITextFieldDelegate {
 
     var name: String = ""
+    
+    var dataManager = DataStoreManager.sharedDataStoreManager
+    var sharedData = DataStoreManager.sharedDataStoreManager.dataStore
     
     @IBOutlet weak var infoName: UITextField!
 
@@ -18,16 +21,28 @@ class InfoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        infoName.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if let text = infoName.text {
+            name = text
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "doneSegue" {
             name = infoName.text!
+            
                     }
     }
     
 
+    
+    
     /*
     // MARK: - Navigation
 

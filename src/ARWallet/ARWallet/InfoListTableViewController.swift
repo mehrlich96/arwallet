@@ -10,8 +10,11 @@ import UIKit
 
 class InfoListTableViewController: UITableViewController {
     
-    var info = [String]()
-    var newInfo: String = ""
+    var info = [Password]()
+    var newInfo: Password?
+    
+    var dataManager = DataStoreManager.sharedDataStoreManager
+    var sharedData = DataStoreManager.sharedDataStoreManager.dataStore
 
     @IBAction func cancel(segue:UIStoryboardSegue) {
         
@@ -20,21 +23,32 @@ class InfoListTableViewController: UITableViewController {
     @IBAction func done(segue:UIStoryboardSegue) {
         print("done segue started")
         let infoDetailVC = segue.source as! InfoDetailViewController
-        newInfo = infoDetailVC.name
+        newInfo = Password(password: infoDetailVC.name, userName: nil, site: nil)
         
-        info.append(newInfo)
+        
+        
+        
+        info.append(newInfo!)
         tableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        info = ["Social Security Number", "Driver's License Number", "Employee ID"]
+        info = [Password(password: "888-88-8888", userName: nil, site: "Social Security Number"), Password(password: "55 555 555", userName: nil, site: "Driver's License Number")]
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        sharedData.userPData.append(ViewData(passwords: info))
+        
     }
 
     // MARK: - Table view data source
@@ -53,7 +67,9 @@ class InfoListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath)
 
-        cell.textLabel?.text = info[indexPath.row]
+        var pword = info[indexPath.row]
+        cell.textLabel?.text = pword.site
+        cell.detailTextLabel?.text = pword.password
         // Configure the cell...
 
         return cell

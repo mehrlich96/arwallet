@@ -11,7 +11,6 @@ import UIKit
 
 struct ViewData {
     var passwords: [Password]
-    var refImageName: String
 }
 
 struct Password {
@@ -27,6 +26,8 @@ class DataStore: NSObject, NSCoding {
     var userReferenceImages: [UIImage] = [UIImage]()
     
     var userPData: [ViewData] = [ViewData]()
+    
+    
     
     override init() {
         super.init()
