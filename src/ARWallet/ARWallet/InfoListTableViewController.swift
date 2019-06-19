@@ -61,11 +61,12 @@ class InfoListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return info.count
+        return info.count + 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row < info.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath)
 
         var pword = info[indexPath.row]
@@ -74,17 +75,42 @@ class InfoListTableViewController: UITableViewController {
         // Configure the cell...
 
         return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath)
+            
+            cell.backgroundColor = UIColor.blue
+            
+            cell.textLabel?.text = "DONE"
+            cell.textLabel?.textColor = UIColor.white
+            
+            return cell
+        }
     }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row < info.count {
         if let data = info[indexPath.row] as? Password{
             passingData = data
             editingIndex = indexPath.row
             self.isEditingNew = false
             self.performSegue(withIdentifier: "segueToAdd", sender: nil)
         }
+        } else {
+            print("done btn tapped")
+            
+            let viewG = self.tableView
+            let renderer = UIGraphicsImageRenderer(size: viewG!.bounds.size)
+            let image = renderer.image { ctx in
+                viewG!.drawHierarchy(in: viewG!.bounds, afterScreenUpdates: true)
+            }
+
+            sharedData.ReferenceDict["test"] = (image, ViewData(passwords: info))
+            self.dismiss(animated: false, completion: nil)
+            
+        }
     }
+    
     
     var passingData: Password?
     var editingIndex: Int?
