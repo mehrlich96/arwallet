@@ -14,6 +14,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,11 +28,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = sceneView.scene
         
         // Set the scene to the view
         sceneView.scene = scene
     }
+
     
     var referenceImages: [UIImage] = [UIImage]()
     
@@ -40,29 +45,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         var customReferenceSet = Set<ARReferenceImage>()
         
-        if let unwrapped = DataManager.dataStore.userReferenceImages as? [UIImage] {
+        DispatchQueue.main.async {
+            if let unwrapped = self.DataManager.dataStore.userReferenceImages as? [UIImage] {
+                
+                let image = unwrapped[0]
+                
+                guard let cgImage = image.cgImage else { return }
+                
+                //3. Get The Width Of The Image
+                let imageWidth = CGFloat(cgImage.width)
+                
+                //4. Create A Custom AR Reference Image With A Unique Name
+                let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.1)
+                customARReferenceImage.name = "Custom reference image"
+                
+                //4. Insert The Reference Image Into Our Set
+                customReferenceSet.insert(customARReferenceImage)
+                
+                print("ARReference Image == \(customARReferenceImage)")
+                configuration.trackingImages = customReferenceSet
+            } else {
+                guard let unwrappedBundle = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
+                    fatalError("Missing expected asset catalog resources.")
+                }
+                configuration.trackingImages = unwrappedBundle
+        }
+        
             
-            let image = unwrapped[0]
-            
-            guard let cgImage = image.cgImage else { return }
-            
-            //3. Get The Width Of The Image
-            let imageWidth = CGFloat(cgImage.width)
-            
-            //4. Create A Custom AR Reference Image With A Unique Name
-            let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.1)
-            customARReferenceImage.name = "Custom reference image"
-            
-            //4. Insert The Reference Image Into Our Set
-            customReferenceSet.insert(customARReferenceImage)
-            
-            print("ARReference Image == \(customARReferenceImage)")
-            configuration.trackingImages = customReferenceSet
-        } else {
-            guard let unwrappedBundle = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-                fatalError("Missing expected asset catalog resources.")
-            }
-            configuration.trackingImages = unwrappedBundle
         }
         
         
@@ -165,4 +174,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
     }
+    
+    
 }

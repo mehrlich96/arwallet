@@ -32,7 +32,7 @@ extension ImagePickingViewController: ImagePickerDelegate {
     func didSelect(image: UIImage?) {
         if let unwrappedImage = image {
             self.DataManager.dataStore.userReferenceImages.append(unwrappedImage)
-            self.performSegue(withIdentifier: "ShowAR", sender: nil)
+            self.performSegue(withIdentifier: "showTable", sender: nil)
         }
     }
 }
