@@ -22,7 +22,10 @@ class InfoListTableViewController: UITableViewController {
         
     }
     
+    var isEditingNew = true
+    
     @IBAction func addInfo(_ sender: Any) {
+        isEditingNew = true
         self.performSegue(withIdentifier: "segueToAdd", sender: self)
     }
     @IBAction func done(segue:UIStoryboardSegue) {
@@ -78,6 +81,7 @@ class InfoListTableViewController: UITableViewController {
         if let data = info[indexPath.row] as? Password{
             passingData = data
             editingIndex = indexPath.row
+            self.isEditingNew = false
             self.performSegue(withIdentifier: "segueToAdd", sender: nil)
         }
     }
@@ -88,7 +92,7 @@ class InfoListTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToAdd" {
             if let destVC = segue.destination as? InfoDetailViewController {
-                if passingData != nil {
+                if !isEditingNew {
                     destVC.passwordData = passingData
                     destVC.isEditingNew = false
                     destVC.editingIndex = editingIndex
