@@ -76,22 +76,21 @@
                                 <rect key="frame" x="85" y="425.5" width="244" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Add New References">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="showImagePicker:" destination="qbV-Fk-f0y" eventType="touchUpInside" id="INz-tl-pKE"/>
-                                    <segue destination="WG4-eK-Xi3" kind="presentation" id="1Ta-Sv-uje"/>
+                                    <segue destination="tez-qf-VsM" kind="presentation" id="irT-DO-Stc"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No References Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2Z-bK-Zzs">
                                 <rect key="frame" x="73" y="140" width="269" height="77"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Tsb-RU-F9S" firstAttribute="centerY" secondItem="WaS-Ui-qg8" secondAttribute="centerY" id="UzU-qY-QBo"/>
                             <constraint firstItem="Tsb-RU-F9S" firstAttribute="centerX" secondItem="WaS-Ui-qg8" secondAttribute="centerX" id="XDI-nL-hOc"/>
