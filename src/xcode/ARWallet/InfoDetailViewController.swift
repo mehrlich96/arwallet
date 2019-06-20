@@ -38,7 +38,18 @@ class InfoDetailViewController: UIViewController, UITextFieldDelegate {
         userField.addTarget(self, action: #selector(userFieldDidChange(_:)), for: .editingChanged)
         storeField.addTarget(self, action: #selector(infoFieldDidChange(_:)), for: .editingChanged)
         
+        titleField.delegate = self
+        userField.delegate = self
+        storeField.delegate = self
+        
+        
+        navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#1693c9")
         // Do any additional setup after loading the view.
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
     
     func checkPassword() {

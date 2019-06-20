@@ -63,7 +63,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         
                         //3. Get The Width Of The Image
                         let imageWidth = CGFloat(cgImage.width)
-                        
+                        let imageHeight = CGFloat(cgImage.height)
+                        print("\(imageWidth)")
                         //4. Create A Custom AR Reference Image With A Unique Name
                         let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: CGFloat(0.1))
                         customARReferenceImage.name = key
@@ -166,7 +167,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let picNode = SCNNode(geometry: planeGeometry)
         print("\(referenceImage.name)")
         
-        material.diffuse.contents = UIImage(named: "over")
+        
+        for (key, (view,viewData, image)) in DataManager.dataStore.ReferenceDict {
+            if referenceImage.name == key {
+                material.diffuse.contents = view
+                print("\(key)")
+            }
+        }
+        
+        
         
         
         planeGeometry.materials = [material]
@@ -235,5 +244,32 @@ extension UIColor {
         let alpha = alpha
         
         self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
+public extension UIImage {
+    func croppedImage(inRect rect: CGRect) -> UIImage {
+        let rad: (Double) -> CGFloat = { deg in
+            return CGFloat(deg / 180.0 * .pi)
+        }
+        var rectTransform: CGAffineTransform
+        switch imageOrientation {
+        case .left:
+            let rotation = CGAffineTransform(rotationAngle: rad(90))
+            rectTransform = rotation.translatedBy(x: 0, y: -size.height)
+        case .right:
+            let rotation = CGAffineTransform(rotationAngle: rad(-90))
+            rectTransform = rotation.translatedBy(x: -size.width, y: 0)
+        case .down:
+            let rotation = CGAffineTransform(rotationAngle: rad(-180))
+            rectTransform = rotation.translatedBy(x: -size.width, y: -size.height)
+        default:
+            rectTransform = .identity
+        }
+        rectTransform = rectTransform.scaledBy(x: scale, y: scale)
+        let transformedRect = rect.applying(rectTransform)
+        let imageRef = cgImage!.cropping(to: transformedRect)!
+        let result = UIImage(cgImage: imageRef, scale: scale, orientation: imageOrientation)
+        return result
     }
 }

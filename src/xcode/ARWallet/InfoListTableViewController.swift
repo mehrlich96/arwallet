@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SAPFiori
 
 class InfoListTableViewController: UITableViewController {
     
@@ -26,7 +27,11 @@ class InfoListTableViewController: UITableViewController {
     
     @IBAction func addInfo(_ sender: Any) {
         isEditingNew = true
-        self.performSegue(withIdentifier: "segueToAdd", sender: self)
+        if info.count >= 2 {
+            FUIToastMessage.show(message: "Error the recommended limit for this reference image is 2 messages", icon: FUIIconLibrary.system.information, inView: self.view, withDuration: 3, maxNumberOfLines: 5)
+        } else {
+            self.performSegue(withIdentifier: "segueToAdd", sender: self)
+        }
     }
     @IBAction func done(segue:UIStoryboardSegue) {
         
@@ -35,7 +40,16 @@ class InfoListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        passwordCells.removeAll()
+        navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#1693c9")
+        
         info = [Password(password: "888-88-8888", userName: nil, site: "Social Security Number"), Password(password: "55 555 555", userName: nil, site: "Driver's License Number")]
+        
+        tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
+        tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
+        
+        tableView.backgroundColor = UIColor.white
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -53,7 +67,8 @@ class InfoListTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    @IBOutlet weak var placehodlerView: UIView!
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -67,26 +82,48 @@ class InfoListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row < info.count {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: FUIObjectTableViewCell.reuseIdentifier, for: indexPath) as! FUIObjectTableViewCell
 
         var pword = info[indexPath.row]
-        cell.textLabel?.text = pword.site
-        cell.detailTextLabel?.text = pword.password
+        cell.headlineText = pword.site
+        cell.subheadlineText = pword.password
+        cell.footnoteText = pword.userName
+            
+            
         // Configure the cell...
 
+        passwordCells.append(cell)
+        
         return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: FUIButtonFormCell.reuseIdentifier, for: indexPath) as! FUIButtonFormCell
             
-            cell.backgroundColor = UIColor.blue
+            doneBtnHeight = cell.frame.height
             
-            cell.textLabel?.text = "DONE"
-            cell.textLabel?.textColor = UIColor.white
-            
+            cell.button.setTitle("Done", for: .normal)
+            cell.button.addTarget(self, action: #selector(doneBtnFunc), for: .touchUpInside)
             return cell
         }
     }
     
+    
+    @objc func doneBtnFunc() {
+        print("done btn tapped")
+        
+        let alert = UIAlertController(title: "Name", message: "Please enter a reference image name", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "Enter Reference Image Name"
+        })
+        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { action in
+            let firstTextField = alert.textFields![0] as UITextField
+            self.referenceName = firstTextField.text
+            self.createReferenceImage()
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row < info.count {
@@ -96,45 +133,68 @@ class InfoListTableViewController: UITableViewController {
             self.isEditingNew = false
             self.performSegue(withIdentifier: "segueToAdd", sender: nil)
         }
-        } else {
-            print("done btn tapped")
-            
-            let alert = UIAlertController(title: "Name", message: "Please enter a reference image name", preferredStyle: .alert)
-            alert.addTextField(configurationHandler: { (textField) in
-                textField.placeholder = "Enter Reference Image Name"
-                })
-            alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { action in
-                let firstTextField = alert.textFields![0] as UITextField
-                self.referenceName = firstTextField.text
-                self.createReferenceImage()
-                
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-            
         }
     }
+    
+    var doneBtnHeight: CGFloat? = 0
+    
+    var passwordCells: [FUIObjectTableViewCell] = [FUIObjectTableViewCell]()
     
     var referenceName: String?
     
     func createReferenceImage() {
         let viewG = self.tableView
-        let renderer = UIGraphicsImageRenderer(size: viewG!.bounds.size)
-        let image = renderer.image { ctx in
-            viewG!.drawHierarchy(in: viewG!.bounds, afterScreenUpdates: true)
-        }
+        
+        print(self.tableView.contentSize)
+        
+        let viewHeight = placehodlerView.frame.height
+        let offset = viewHeight + doneBtnHeight!
+        
+        print("\(offset)")
+        
+        let adjustedSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - offset)
+        
+        let imager = self.tableView.asFullImage()
+        let imamage = generateImage(tblview: self.tableView)
+        
+        let imageWidth = imamage.size.width
+        let imageHeight = imamage.size.height
+        
+       let cropped = imamage.croppedImage(inRect: CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight - imageHeight*0.15))
+        
+        
+        
+        
         
         if let name = referenceName {
-            sharedData.ReferenceDict[name] = (image, ViewData(passwords: info), currentImage)
+            sharedData.ReferenceDict[name] = (cropped, ViewData(passwords: info), currentImage)
             dataManager.saveDataStore()
         } else {
-            sharedData.ReferenceDict["Random"] = (image, ViewData(passwords: info), currentImage)
+            sharedData.ReferenceDict["Random"] = (cropped, ViewData(passwords: info), currentImage)
             dataManager.saveDataStore()
         }
         
 
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func generateImage(tblview:UITableView) ->UIImage{
+        UIGraphicsBeginImageContext(tblview.contentSize);
+        tblview.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        tblview.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let row = tblview.numberOfRows(inSection: 0)
+        let numberofRowthatShowinscreen = 4
+        var scrollCount = row / numberofRowthatShowinscreen
+        var i = 0
+        while i < scrollCount {
+            tblview.scrollToRow(at: IndexPath(row: (i+1)*numberofRowthatShowinscreen, section: 0), at: .top, animated: false)
+            tblview.layer.render(in: UIGraphicsGetCurrentContext()!)
+            i += 1
+        }
+        
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext();
+        return image;
     }
     
     var passingData: Password?
@@ -200,4 +260,48 @@ class InfoListTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension UITableView {
+    
+    func asFullImage() -> UIImage? {
+        
+        guard self.numberOfSections > 0, self.numberOfRows(inSection: 0) > 0 else {
+            return nil
+        }
+        
+        self.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        
+        var height: CGFloat = 0.0
+        for section in 0..<self.numberOfSections {
+            var cellHeight: CGFloat = 0.0
+            for row in 0..<self.numberOfRows(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                guard let cell = self.cellForRow(at: indexPath) else { continue }
+                cellHeight = cell.frame.size.height
+            }
+            height += cellHeight * CGFloat(self.numberOfRows(inSection: section))
+        }
+        
+        
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: self.contentSize.width, height: height), true, UIScreen.main.scale)
+        
+        for section in 0..<self.numberOfSections {
+            for row in 0..<self.numberOfRows(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                guard let cell = self.cellForRow(at: indexPath) else { continue }
+                cell.backgroundColor = UIColor.white
+                cell.contentView.drawHierarchy(in: cell.frame, afterScreenUpdates: true)
+                
+                if row < self.numberOfRows(inSection: section) - 1 {
+                    self.scrollToRow(at: IndexPath(row: row+1, section: section), at: .bottom, animated: false)
+                }
+            }
+        }
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
 }

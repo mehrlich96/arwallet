@@ -21,6 +21,10 @@
 		33480BB822B92F8E00F29F08 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB722B92F8E00F29F08 /* ImagePicker.swift */; };
 		33480BBA22B932A400F29F08 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33480BB922B932A400F29F08 /* ImagePickingViewController.swift */; };
 		33CF6C4422BAB651009B9E7B /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CF6C4322BAB651009B9E7B /* InitialViewController.swift */; };
+		33D44C9A22BBC87200157332 /* SAPCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D44C9822BBC86F00157332 /* SAPCommon.framework */; };
+		33D44C9B22BBC87200157332 /* SAPCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33D44C9822BBC86F00157332 /* SAPCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33D44C9C22BBC87200157332 /* SAPFiori.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D44C9922BBC87100157332 /* SAPFiori.framework */; };
+		33D44C9D22BBC87200157332 /* SAPFiori.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33D44C9922BBC87100157332 /* SAPFiori.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C565923C22BA717C007532DA /* InfoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923B22BA717C007532DA /* InfoListTableViewController.swift */; };
 		C565923E22BA7539007532DA /* InfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C565923D22BA7539007532DA /* InfoDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +38,21 @@
 			remoteInfo = ARWallet;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		33D44C9E22BBC87200157332 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				33D44C9B22BBC87200157332 /* SAPCommon.framework in Embed Frameworks */,
+				33D44C9D22BBC87200157332 /* SAPFiori.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		33480B8A22B912F000F29F08 /* ARWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +73,8 @@
 		33480BB722B92F8E00F29F08 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		33480BB922B932A400F29F08 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
 		33CF6C4322BAB651009B9E7B /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		33D44C9822BBC86F00157332 /* SAPCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SAPCommon.framework; sourceTree = "<group>"; };
+		33D44C9922BBC87100157332 /* SAPFiori.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SAPFiori.framework; sourceTree = "<group>"; };
 		C565923B22BA717C007532DA /* InfoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoListTableViewController.swift; sourceTree = "<group>"; };
 		C565923D22BA7539007532DA /* InfoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33D44C9A22BBC87200157332 /* SAPCommon.framework in Frameworks */,
+				33D44C9C22BBC87200157332 /* SAPFiori.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +102,8 @@
 		33480B8122B912F000F29F08 = {
 			isa = PBXGroup;
 			children = (
+				33D44C9822BBC86F00157332 /* SAPCommon.framework */,
+				33D44C9922BBC87100157332 /* SAPFiori.framework */,
 				33480B8C22B912F000F29F08 /* ARWallet */,
 				33480BA322B912F200F29F08 /* ARWalletTests */,
 				33480B8B22B912F000F29F08 /* Products */,
@@ -136,6 +161,7 @@
 				33480B8622B912F000F29F08 /* Sources */,
 				33480B8722B912F000F29F08 /* Frameworks */,
 				33480B8822B912F000F29F08 /* Resources */,
+				33D44C9E22BBC87200157332 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -401,6 +427,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LH8GY3DHHE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ARWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -422,6 +452,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LH8GY3DHHE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ARWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
