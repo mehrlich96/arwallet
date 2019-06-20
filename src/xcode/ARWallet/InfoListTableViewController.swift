@@ -27,11 +27,11 @@ class InfoListTableViewController: UITableViewController {
     
     @IBAction func addInfo(_ sender: Any) {
         isEditingNew = true
-        if info.count >= 2 {
-            FUIToastMessage.show(message: "Error the recommended limit for this reference image is 2 messages", icon: FUIIconLibrary.system.information, inView: self.view, withDuration: 3, maxNumberOfLines: 5)
-        } else {
+//        if info.count >= 2 {
+//            FUIToastMessage.show(message: "Error the recommended limit for this reference image is 2 messages", icon: FUIIconLibrary.system.information, inView: self.view, withDuration: 3, maxNumberOfLines: 5)
+//        } else {
             self.performSegue(withIdentifier: "segueToAdd", sender: self)
-        }
+        //}
     }
     @IBAction func done(segue:UIStoryboardSegue) {
         
@@ -160,7 +160,7 @@ class InfoListTableViewController: UITableViewController {
         let imageWidth = imamage.size.width
         let imageHeight = imamage.size.height
         
-       let cropped = imamage.croppedImage(inRect: CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight - imageHeight*0.15))
+       let cropped = imamage.croppedImage(inRect: CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight - imageHeight*(offset/imageHeight)))
         
         
         
@@ -187,7 +187,7 @@ class InfoListTableViewController: UITableViewController {
         var scrollCount = row / numberofRowthatShowinscreen
         var i = 0
         while i < scrollCount {
-            tblview.scrollToRow(at: IndexPath(row: (i+1)*numberofRowthatShowinscreen, section: 0), at: .top, animated: false)
+            tblview.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             tblview.layer.render(in: UIGraphicsGetCurrentContext()!)
             i += 1
         }

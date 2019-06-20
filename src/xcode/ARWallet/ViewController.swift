@@ -164,18 +164,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let planeGeometry = SCNPlane(width: size.width, height: size.height)
         var adjustedSize = size
         let material = SCNMaterial()
-        let picNode = SCNNode(geometry: planeGeometry)
+        
         print("\(referenceImage.name)")
         
         
         for (key, (view,viewData, image)) in DataManager.dataStore.ReferenceDict {
             if referenceImage.name == key {
                 material.diffuse.contents = view
+                let viewHeightTOwidth = view.size.height/view.size.width
+                
+                planeGeometry.height = viewHeightTOwidth*size.width
+                
                 print("\(key)")
             }
         }
         
-        
+        let picNode = SCNNode(geometry: planeGeometry)
         
         
         planeGeometry.materials = [material]
