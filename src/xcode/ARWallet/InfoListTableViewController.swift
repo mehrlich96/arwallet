@@ -44,7 +44,7 @@ class InfoListTableViewController: UITableViewController {
         passwordCells.removeAll()
         navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#1693c9")
         
-        info = [Password(password: "888-88-8888", userName: nil, site: "Social Security Number"), Password(password: "55 555 555", userName: nil, site: "Driver's License Number")]
+        info = [Password(password: "888-88-8888", userName: nil, site: "Example SSN"), ]
         
         tableView.register(FUIButtonFormCell.self, forCellReuseIdentifier: FUIButtonFormCell.reuseIdentifier)
         tableView.register(FUIObjectTableViewCell.self, forCellReuseIdentifier: FUIObjectTableViewCell.reuseIdentifier)
