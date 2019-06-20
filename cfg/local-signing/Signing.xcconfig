@@ -1,0 +1,6 @@
+// Acccount 5 identifiers are being used here.
+// https://wiki.wdf.sap.corp/wiki/display/NWPro/Xmake+iOS+Developer+Guide?preview=/1842920699/1844623142/account.png
+
+
+CODE_SIGN_IDENTITY = iPhone Developer
+PROVISIONING_PROFILE_SPECIFIER = 4FE7U4H495/com sap sree app development profile
