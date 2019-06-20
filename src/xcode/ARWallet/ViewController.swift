@@ -33,6 +33,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
+        
     }
 
     
@@ -45,6 +46,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#1693c9")
+        
         let configuration = ARImageTrackingConfiguration()
         
         var customReferenceSet = Set<ARReferenceImage>()

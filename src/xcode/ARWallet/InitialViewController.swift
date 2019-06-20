@@ -8,13 +8,16 @@
 
 import UIKit
 
-class InitialViewController: UIViewController {
+class InitialViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var userTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        userTextField.delegate = self
+        passwordField.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -37,8 +40,16 @@ class InitialViewController: UIViewController {
             self.signInBtn.centerYAnchor.constraint(equalTo: self.view.topAnchor, constant: viewHeight*499/667).isActive = true
             
             
+            
         }
         
+        
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
     
     @IBAction func signInSegue(_ sender: Any) {
@@ -62,4 +73,23 @@ class InitialViewController: UIViewController {
     }
     */
 
+}
+
+extension UIView {
+    func applyGradient(colours: [CGColor]) -> Void {
+        self.applyGradient(colours: colours, locations: nil)
+    }
+    
+    func applyGradient(colours: [CGColor], locations: [NSNumber]?) -> Void {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        print(self.bounds)
+        gradient.frame = self.bounds
+        //        gradient.frame = CGRect(x: 0, y: 0, width: gradient.frame.width + 20, height: gradient.frame.height)
+        print(gradient.frame.width)
+        
+        gradient.colors = colours
+        gradient.cornerRadius = 5
+        //gradient.locations = locations
+        self.layer.insertSublayer(gradient, at: 0)
+    }
 }
