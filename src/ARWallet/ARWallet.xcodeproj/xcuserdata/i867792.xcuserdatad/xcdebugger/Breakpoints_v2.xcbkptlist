@@ -10,13 +10,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ARWallet/InfoListTableViewController.swift"
-            timestampString = "582671590.466019"
+            filePath = "ARWallet/DataStore.swift"
+            timestampString = "582729453.96035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "encode(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

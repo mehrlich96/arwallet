@@ -22,7 +22,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -30,7 +29,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = sceneView.scene
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
@@ -50,25 +49,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         var customReferenceSet = Set<ARReferenceImage>()
         
-        DispatchQueue.main.async {
-            if let unwrapped = self.DataManager.dataStore.userReferenceImages as? [UIImage] {
+        
+            if let unwrapped = self.DataManager.dataStore.ReferenceDict as?  [String: (UIImage, ViewData, UIImage)] {
                 
                 if unwrapped.count > 0{
                     
-                    for image in unwrapped {
+                    for (key, (view,viewData, image)) in unwrapped {
                         guard let cgImage = image.cgImage else { return }
                         
                         //3. Get The Width Of The Image
                         let imageWidth = CGFloat(cgImage.width)
                         
                         //4. Create A Custom AR Reference Image With A Unique Name
-                        let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: 0.1)
-                        customARReferenceImage.name = "Custom reference image"
+                        let customARReferenceImage = ARReferenceImage(cgImage, orientation: CGImagePropertyOrientation.up, physicalWidth: CGFloat(0.1))
+                        customARReferenceImage.name = key
                         
                         //4. Insert The Reference Image Into Our Set
                         customReferenceSet.insert(customARReferenceImage)
                         
-                        print("ARReference Image == \(customARReferenceImage)")
+                        print("ARReference Image == \(customARReferenceImage.name)")
                     }
                     
                     configuration.trackingImages = customReferenceSet
@@ -80,10 +79,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             } else {
                 self.presentRefImageAlert()
             }
-        }
+        
         
         // Run the view's session
-        sceneView.session.run(configuration)
+        sceneView.session.run(configuration, options: [.resetTracking,.removeExistingAnchors])
     }
     
     var imagePicker: ImagePicker!

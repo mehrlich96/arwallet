@@ -42,7 +42,13 @@ class InitialViewController: UIViewController {
     }
     
     @IBAction func signInSegue(_ sender: Any) {
-        self.performSegue(withIdentifier: "SegueToAR", sender: self)
+        
+        if let user = userTextField.text {
+            self.performSegue(withIdentifier: "SegueToAR", sender: self)
+        } else {
+            
+        }
+        
     }
     
     

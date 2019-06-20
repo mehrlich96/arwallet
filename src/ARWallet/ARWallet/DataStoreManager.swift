@@ -23,16 +23,21 @@ final class DataStoreManager {
         NSLog("Shared App Group Name \(kSharedAppGroupName ?? "<Empty>")")
         
         // FIX ME: Add constants for string keys
-        let decoded = defaults.object(forKey:"dataStoreManager")
-        if decoded != nil {
-            do {
-                let dataStore = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded as! Data) as? DataStore
-                if dataStore != nil {
-                    self.dataStore = dataStore!
-                }
-            } catch {
-                print("Failed to decode data store \(error)")
-            }
+//        let decoded = defaults.object(forKey:"dataStoreManager")
+//        if decoded != nil {
+//            do {
+//                let dataStore = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded as! Data) as? DataStore
+//                if dataStore != nil {
+//                    self.dataStore = dataStore!
+//                }
+//            } catch {
+//                print("Failed to decode data store \(error)")
+//            }
+//        }
+        
+        if let decoded = defaults.object(forKey: "dataStoreManager") as? NSData {
+            let array = NSKeyedUnarchiver.unarchiveObject(with: decoded as Data) as! DataStore
+            self.dataStore = array
         }
     }
     
@@ -40,7 +45,7 @@ final class DataStoreManager {
         do {
             let encodedData = try NSKeyedArchiver.archivedData(withRootObject: self.dataStore, requiringSecureCoding: false)
             let defaults = UserDefaults.standard
-            defaults.set(encodedData, forKey:"dataStoreManager")
+            defaults.set(encodedData, forKey: "dataStoreManager")
         } catch {
             print("Could not save the data store: \(error)")
         }

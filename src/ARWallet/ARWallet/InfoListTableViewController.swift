@@ -90,7 +90,7 @@ class InfoListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row < info.count {
-        if let data = info[indexPath.row] as? Password{
+        if let data = info[indexPath.row] as? Password {
             passingData = data
             editingIndex = indexPath.row
             self.isEditingNew = false
@@ -99,18 +99,43 @@ class InfoListTableViewController: UITableViewController {
         } else {
             print("done btn tapped")
             
-            let viewG = self.tableView
-            let renderer = UIGraphicsImageRenderer(size: viewG!.bounds.size)
-            let image = renderer.image { ctx in
-                viewG!.drawHierarchy(in: viewG!.bounds, afterScreenUpdates: true)
-            }
-
-            sharedData.ReferenceDict["test"] = (image, ViewData(passwords: info))
-            self.dismiss(animated: false, completion: nil)
+            let alert = UIAlertController(title: "Name", message: "Please enter a reference image name", preferredStyle: .alert)
+            alert.addTextField(configurationHandler: { (textField) in
+                textField.placeholder = "Enter Reference Image Name"
+                })
+            alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { action in
+                let firstTextField = alert.textFields![0] as UITextField
+                self.referenceName = firstTextField.text
+                self.createReferenceImage()
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
             
         }
     }
     
+    var referenceName: String?
+    
+    func createReferenceImage() {
+        let viewG = self.tableView
+        let renderer = UIGraphicsImageRenderer(size: viewG!.bounds.size)
+        let image = renderer.image { ctx in
+            viewG!.drawHierarchy(in: viewG!.bounds, afterScreenUpdates: true)
+        }
+        
+        if let name = referenceName {
+            sharedData.ReferenceDict[name] = (image, ViewData(passwords: info), currentImage)
+            dataManager.saveDataStore()
+        } else {
+            sharedData.ReferenceDict["Random"] = (image, ViewData(passwords: info), currentImage)
+            dataManager.saveDataStore()
+        }
+        
+
+        self.navigationController?.popViewController(animated: true)
+    }
     
     var passingData: Password?
     var editingIndex: Int?

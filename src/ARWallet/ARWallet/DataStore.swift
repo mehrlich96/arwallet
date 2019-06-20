@@ -27,7 +27,7 @@ class DataStore: NSObject, NSCoding {
     
     var userPData: [ViewData] = [ViewData]()
     
-    var ReferenceDict: [String: (UIImage, ViewData)] = [String: (UIImage, ViewData)]()
+    var ReferenceDict: [String: (UIImage, ViewData, UIImage)] = [String: (UIImage, ViewData, UIImage)]()
     
     
     
@@ -57,7 +57,7 @@ class DataStore: NSObject, NSCoding {
         coder.encode(self.userReferenceImages, forKey: "ReferenceImages")
         coder.encode(self.userPasswordViews, forKey: "PasswordViews")
         coder.encode(self.userPData, forKey: "PData")
-        coder.encode(self.ReferenceDict, forKey: "ReferenceDict")
+        
     }
     
     required init?(coder decoder: NSCoder) {
@@ -87,9 +87,7 @@ class DataStore: NSObject, NSCoding {
         if let data = decoder.decodeObject(forKey: "PData") as? [ViewData] {
             self.userPData = data
         }
-        if let dictionary = decoder.decodeObject(forKey: "ReferenceDict") as? [String: (UIImage, ViewData)] {
-            self.ReferenceDict = dictionary
-        }
+        
         
     }
     
